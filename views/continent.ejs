@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Covtrack </title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="/css/c-style.css">
+</head>
+
+<body>
+
+    <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div>
+
+    <div id="main-wrapper">
+
+        <div class="header">
+            <div class="container-fluid" >
+                <div class="row">
+                    <div class="col-xl-12">
+                        <nav class="navbar navbar-expand-lg navbar-light">
+                            <a class="navbar-brand" href="/"><img src="./images/logo.png" alt="">
+                                <span>Covtrack</span></a>
+                            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                                data-target="#navbarSupportedContent">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                <ul class="navbar-nav">                                    
+                                    <li class="nav-item dropdown">
+                                        <span><i class="fas fa-globe-europe"></i></span>
+                                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                                            Continent
+                                        </a>
+                                        <div class="dropdown-menu">                      
+                                            <a class="dropdown-item" href="/continent/asia">Asia</a>
+                                            <a class="dropdown-item" href="/continent/europe">Europe</a>
+                                            <a class="dropdown-item" href="/continent/africa">Africa</a>                      
+                                            <a class="dropdown-item" href="/continent/south-america">South America</a>
+                                            <a class="dropdown-item" href="/continent/north-america">North America</a>
+                                          </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-body">
+            <div class="container-fluid" style="
+            max-width: 95%;
+        ">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Asia</h4>
+                            </div>
+                            <div class="card-body">
+                                <div id="continent-map" class="continent-map"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-5">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="country-datainfo">
+                                    <div id="country_flag"></div>
+                                    <h3 class="mb-0" id="country_name"></h3>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="country-data">
+                                    <div class="icon gradient-1" style="
+                                    width: 2.5rem;
+                                    height: 2.5rem;
+                                ">
+                                        <i class="fas fa-virus"></i>
+                                    </div>
+                                    <div>
+                                        <span style="
+                                        font-size: 12px;
+                                    ">Total Cases</span>
+                                        <h3 id="country_cases" style="
+                                        font-size: 1.3rem;
+                                    "></h3>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+                            <div class="col-xl-6">
+                                <div class="country-data">
+                                    <div class="icon gradient-9">
+                                        <i class="fas fa-procedures"></i>
+                                    </div>
+                                    <div>
+                                        <span>Total Deaths</span>
+                                        <h3 id="country_deaths"></h3>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+                            <div class="col-xl-6">
+                                <div class="country-data">
+                                    <div class="icon gradient-4">
+                                        <i class="fas fa-child"></i>
+                                    </div>
+                                    <div>
+                                        <span>Recovered</span>
+                                        <h3 id="country_recovered"></h3>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-xl-6">
+                                <div class="country-data">
+                                    <div class="icon gradient-8">
+                                        <i class="fas fa-head-side-cough"></i>
+                                    </div>
+                                    <div>
+                                        <span>Active</span>
+                                        <h3 id="country_active"></h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="card-title">NEW-CASES</h4>
+                                        <span>Last 7 Days</span>
+                                    </div>
+                                    <div class="card-body"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                                        <canvas id="usa_timeseries" height="400" style="display: block; width: 412px; height: 400px;" width="412" class="chartjs-render-monitor"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="card"> 
+                            <!-- const shortMonth = ['jan', 'feb', 'mar', 'apr', 'may', 'june', 'july', 'aug', 'sept', 'oct', 'nov', 'dec']; -->
+                            <select name="category" class="form-control" name="cate" id="selected-month">
+                                <option value=''>--Select Month--</option>
+                                <option selected value='jan'>Janaury</option>
+                                <option value='feb'>February</option>
+                                <option value='mar'>March</option>
+                                <option value='apr'>April</option>
+                                <option value='may'>May</option>
+                                <option value='june'>June</option>
+                                <option value='july'>July</option>
+                                <option value='aug'>August</option>
+                                <option value='sept'>September</option>
+                                <option value='oct'>October</option>
+                                <option value='nov'>November</option>
+                                <option value='dec'>December</option>
+                            </select>
+                            <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                                <table id="covid-tb" class="table table-bordered table table-hover" cellspacing="0"
+                                    width="100%">
+                                    <colgroup>
+                                        <col width="8%">
+                                        <col width="8%">
+                                        <!-- <col width="20%"> -->
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Flag</th>
+                                            <th>Cases</th>
+                                            <th>Death</th>
+                                            <th>Recovered</th>
+                                            <th>Active</th>
+                                            <th>Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="covid-data">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <br>
+                            <div id="pager">
+                                <ul id="pagination" class="pagination-sm"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- <div class="footer">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-xl-6 col-md-6">
+                        <div class="copy_right">
+                            Copyright © 2020 Quixlab. All Rights Reserved.
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-md-6 text-lg-right text-center">
+                        <div class="social">
+                            <a href="https://www.youtube.com/channel/UChN1goECpg64jlUxSzySiNg?view_as=subscriber"><i
+                                    class="fab fa-youtube"></i></a>
+                            <a href="https://twitter.com/quixlab"><i class="fab fa-twitter"></i></a>
+                            <a href="https://www.facebook.com/qxlab"><i class="fab fa-facebook"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+
+        <!--removeIf(production)-->
+        <!--**********************************
+            Right sidebar start
+        ***********************************-->
+        <div class="sidebar-right">
+            <!-- <a class="sidebar-right-trigger" href="javascript:void(0)">
+                <span><i class="fa fa-cog fa-spin"></i></span>
+            </a>
+            <div class="sidebar-right-inner">
+                <div class="admin-settings">
+                    <div class="opt-header-color">
+                        <p>Background Color</p>
+                        <div>
+                            <span>
+                                <input type="radio" name="header_bg" value="color_1" class="filled-in chk-col-primary"
+                                    id="header_color_1">
+                                <label for="header_color_1"></label>
+                            </span>
+                            <span>
+                                <input type="radio" name="header_bg" value="color_2" class="filled-in chk-col-primary"
+                                    id="header_color_2">
+                                <label for="header_color_2"></label>
+                            </span>
+                            <span>
+                                <input type="radio" name="header_bg" value="color_3" class="filled-in chk-col-primary"
+                                    id="header_color_3">
+                                <label for="header_color_3"></label>
+                            </span>
+                            <span>
+                                <input type="radio" name="header_bg" value="color_4" class="filled-in chk-col-primary"
+                                    id="header_color_4">
+                                <label for="header_color_4"></label>
+                            </span>
+                            <span>
+                                <input type="radio" name="header_bg" value="color_5" class="filled-in chk-col-primary"
+                                    id="header_color_5">
+                                <label for="header_color_5"></label>
+                            </span>
+                            <span>
+                                <input type="radio" name="header_bg" value="color_6" class="filled-in chk-col-primary"
+                                    id="header_color_6">
+                                <label for="header_color_6"></label>
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <p>Direction</p>
+                        <select class="form-control" name="theme_direction" id="theme_direction">
+                            <option value="ltr">LTR</option>
+                            <option value="rtl">RTL</option>
+                        </select>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+        <!--**********************************
+            Right sidebar end
+        ***********************************-->
+        <!--endRemoveIf(production)-->
+
+    </div>
+
+
+
+
+
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/vendor/chartjs/Chart.bundle.min.js"></script>
+    <!-- <script src="/js/chart.js"></script> -->
+    <script src="/vendor/vectormap/jquery.vmap.min.js"></script>
+
+    <script src="<%= "../vendor/vectormap/jquery.vmap."+title + ".js"%>"></script>
+
+    // <script src="/vendor/datatable/jquery.dataTables.min.js"></script>
+
+    <script src="/js/continent.js"></script>
+    <script src="/js/scripts.js"></script>
+
+    <script src="/js/settings.js"></script>
+    <script src="/js/quixnav-init.js"></script>
+    <script src="/js/styleSwitcher.js"></script>
+    <script src="/js/jquery.twbsPagination.min.js"></script>
+
+    <script>
+        const pathname = window.location.pathname;
+        const continent = pathname.split('/')[2];
+        let monthSelected = window.location.search.replace('?', '');
+        const shortMonth = ['jan', 'feb', 'mar', 'apr', 'may', 'june', 'july', 'aug', 'sept', 'oct', 'nov', 'dec'];
+        if (!monthSelected) {
+            const _today = new Date();
+            monthSelected = shortMonth[_today.getMonth() - 1];            
+        }
+        $('#selected-month > option').removeAttr('selected').filter(`[value=${monthSelected}]`).prop('selected', true)
+       
+        console.log('month', monthSelected)
+
+        function generateData (month) {
+            var $pagination = $('#pagination'),
+                totalRecords = 0,
+                dataDefaults = [],
+                recPerPage = 100,
+                page = 1,
+                totalPages = 0;
+
+            $.ajax({
+                type: 'GET',
+                url: `http://localhost:3001/api/${continent}/${month}/1`,
+                dataType: 'json',
+                async: true,
+                crossDomain: true,
+                dataType: 'json',
+                success: function ({
+                    totalPage,
+                    data
+                }) {
+                    dataDefaults = data;
+                    totalRecords = totalPage;
+                    totalPages = Math.ceil(totalPage / recPerPage);
+                    apply_pagination();
+                }
+            });
+
+            function dateUTC(string) {
+                const newDate = new Date(string);
+                const _date = newDate.getDate().toString().padStart(2, '0');
+                const _month = (newDate.getMonth() + 1).toString().padStart(2, '0');
+                const _year = newDate.getFullYear();
+                const normalDate = `${_date}/${_month}/${_year} `;
+                return normalDate;
+            }
+
+            function generate_table(data) {
+                let tr;
+                $('#covid-data').html('');
+                for (var i = 0; i < data.length; i++) {
+
+                    tr = $('<tr/>');
+                    tr.append("<td>" + data[i].RNUM + "</td>");
+                    tr.append("<td> <img src='https://disease.sh/assets/img/flags/" + data[i].COUNTRY_CODE
+                    .trim().toLowerCase() + ".png' width='30'></td>");
+                    tr.append("<td>" + data[i].CONFIRMED + "</td>");
+                    tr.append("<td>" + data[i].DEATHED + "</td>");
+                    tr.append("<td>" + data[i].RECOVERED + "</td>");
+                    tr.append("<td>" + data[i].ACTIVED + "</td>");
+                    tr.append("<td>" + dateUTC(data[i].OCCURED_AT) + "</td>");
+                    // tr.append("<td>" + data[i].OCCURED_AT + "</td>");
+                    $('#covid-data').append(tr);
+                }
+            }
+
+            function apply_pagination() {
+                $pagination.twbsPagination({
+                    totalPages: totalPages,
+                    visiblePages: 10,
+                    onPageClick: function (event, page) {
+                        if (page === 1) {
+                            generate_table(dataDefaults);
+                        } else {
+                            // dataIndex = Math.max(page - 1, 0) * recPerPage;
+                            // endRec = (dataIndex) + recPerPage;
+                            // console.log(dataIndex + 'ssssssssss' + endRec);
+                            // data = records.slice(dataIndex, endRec);
+                            $.ajax({
+                                type: 'GET',
+                                url: `http://localhost:3001/api/${continent}/${month}/` +
+                                    page,
+                                dataType: 'json',
+                                async: true,
+                                crossDomain: true,
+                                dataType: 'json',
+                                success: function ({
+                                    totalPage,
+                                    data
+                                }) {
+                                    console.log(data, page);
+                                    generate_table(data);
+                                    // records = data;
+                                    // console.log(records);
+                                    // totalRecords = totalPage;
+                                    // apply_pagination();
+                                }
+                            });
+                        }
+                        // generate_table();
+                    }
+                });
+            }
+        }
+
+        $(document).ready(function () {
+            generateData(monthSelected);
+
+            $('#selected-month').change(function(){                
+                const month = $(this).val();
+                console.log(month);
+                const currentUrl = location;                
+                window.location.href = `${location.origin}${location.pathname}?${month}`;
+            });
+        });
+    </script>
+</body>
+
+</html>
