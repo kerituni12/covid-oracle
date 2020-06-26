@@ -83,10 +83,11 @@ async function addCases(cases) {
     }
 }
 
-
 async function getCases(country) {
     axios
-        .get(`https://api.covid19api.com/total/country/${country}?from=2020-06-23T00:00:00Z&to=2020-06-24T00:00:00Z`)
+        .get(
+            `https://api.covid19api.com/total/country/${country}?from=2020-06-23T00:00:00Z&to=2020-06-24T00:00:00Z`,
+        )
         .then(async function ({
             data
         }) {
@@ -183,7 +184,6 @@ async function todayUpdate(country) {
         .then(async function ({
             data
         }) {
-
             console.log(data['Countries']);
             //get id_country, code_country
             // let connection;
@@ -199,7 +199,7 @@ async function todayUpdate(country) {
                     CountryCode: country_code,
                     TotalConfirmed: confirmed,
                     TotalDeaths: deathed,
-                    TotalRecovered: recovered,                   
+                    TotalRecovered: recovered,
                     Date: occured_at,
                 } = data;
 
@@ -228,3 +228,34 @@ async function todayUpdate(country) {
 
 // getCasesAllCountries();
 todayUpdate();
+
+
+// Test Lap Lich
+async function testLapLich() {
+    let connection;
+
+    try {
+        connection = await oracledb.getConnection(dbConfig);
+        const createSql = `insert into cases (country_code, confirmed, deathed, recovered, actived, occured_at) values ('VN', 122, 122, 122, 122, to_date('2020-06-06','YYYY-MM-DD'))`;
+        const result = await connection.execute(
+            createSql, {}, {
+                autoCommit: true,
+            },
+        );
+        console.log('Result is:', result);
+    } catch (err) {
+        console.error(err);
+    } finally {
+        if (connection) {
+            try {
+                await connection.close();
+            } catch (err) {
+                console.error(err);
+            }
+        }
+    }
+}
+// console.log(
+//   'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+// );
+// testLapLich();
